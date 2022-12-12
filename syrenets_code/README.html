@@ -1,0 +1,37 @@
+<h1 id="syrenets-symbolic-residual-neural-networks">Syrenets: Symbolic Residual Neural Networks</h1>
+<p>This is the official implementation of &quot;Syrenets: Symbolic Residual Neural Networks&quot;. </p>
+<h2 id="requirements">Requirements</h2>
+<p>To install requirements:</p>
+<p>you need to first install Anaconda (instructions can be found: <a href="https://docs.anaconda.com/anaconda/install/">https://docs.anaconda.com/anaconda/install/</a>)</p>
+<p>in the project folder run:</p>
+<pre><code class="lang-setup">conda env create <span class="hljs-_">-f</span> environment.yml
+</code></pre>
+<p>then activate the environment:</p>
+<pre><code class="lang-setup">conda <span class="hljs-built_in">activate</span> neurips2021_syrenets
+</code></pre>
+<p>install pytorch using pip (it depends if you have a CPU or a GPU and which version of CUDA you have, follow the instructions in: <a href="https://pytorch.org/get-started/locally/">https://pytorch.org/get-started/locally/</a>)</p>
+<h2 id="training">Training</h2>
+<p>To train the models in the paper, run this command for the first experiment (direct learning):</p>
+<pre><code class="lang-train">python train<span class="hljs-selector-class">.py</span> <span class="hljs-string">'direct'</span>
+</code></pre>
+<p>and this command for the second experiment (indirect learning):</p>
+<pre><code class="lang-train">python train<span class="hljs-selector-class">.py</span> <span class="hljs-string">'indirect'</span>
+</code></pre>
+<p>aditional hyperparamenter can be changed, the list of full paramenter that can be defined is given by:</p>
+<pre><code class="lang-train">python train<span class="hljs-selector-class">.py</span> -h
+</code></pre>
+<p>The default values are already the ones reported in the paper. If executed, each experiment will evaluate 10 seeds and output each one&#39;s best performance at every 1000 steps. The training of each seed automatically stops when 2000 seconds of training is reached. The next seed starts its training automatically.</p>
+<p>At each 2000 steps the mean squared test error (mse), the root mean squared test error (rmse), the mean test error (mean), the standard deviation of the test error (std), the minimal test error (min) and the maximum test error (max) are printed in the screen. A visualization of this data is also shown on screen as exemplified here:</p>
+<p><img src="example_fig.png" alt="Example of visualization"></p>
+<h2 id="evaluation">Evaluation</h2>
+<p>To evaluate my model on , run:</p>
+<pre><code class="lang-eval"><span class="hljs-keyword">python</span> <span class="hljs-built_in">eval</span>.<span class="hljs-keyword">py</span> <span class="hljs-symbol">&lt;experiment&gt;</span> <span class="hljs-symbol">&lt;model_name&gt;</span>
+</code></pre>
+<p>Where &lt;experiment&gt; is the string &#39;direct&#39;(for evaluating the first experiment) or &#39;indirect&#39; (for evaluating the second experiment)
+&lt;model_name&gt; is the string with the name of the .pt file that contains the trained model in one of the experiments. </p>
+<p>Our naming convention denoted files ending with &#39;_best_model.pt&#39; as model files, provide the name of the file . You should only evaluate models that are trained in the same experiment as denoted in &lt;experiment&gt; since the trained models are not the same.</p>
+<h2 id="pre-trained-models">Pre-trained Models</h2>
+<p>You can download pretrained models here: <a href="https://www.dropbox.com/s/rk5cpeho4twrpi1/trained_models.zip?dl=0">https://www.dropbox.com/s/rk5cpeho4twrpi1/trained_models.zip?dl=0</a></p>
+<p>extract the zip files into the project folder </p>
+<p>The files starting with &#39;syrenets_direct&#39; are: the best model we obtained when training directly; and the training history of the model.</p>
+<p>The files starting with &#39;syrenets_indirect&#39; are: the best model we obtained when training indirectly; and the training history of the model.</p>
