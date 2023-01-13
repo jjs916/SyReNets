@@ -78,7 +78,7 @@ class SelectorsNet(torch.nn.Module):
         new_dists, scaled_dist = self.parallel_heads.forward(attention, last_dist)
         gram_cross_entropy = -new_dists.t() @ torch.log(new_dists + 1E-5)
         return new_dists, scaled_dist, 0.001 * gram_cross_entropy.diag().mean() - gram_cross_entropy.fill_diagonal_(
-            0).mean()
+            0).mean()  # \lambda_2 is fixed as 0.001 here (also the mean is being taken, opposite how it is shown in the paper), increasing it would help make the probability more concentrated; \lambda_3 on the other hand is fixed as 1
 
 
 class Autoencoder(torch.nn.Module):
@@ -164,8 +164,8 @@ class Net(torch.nn.Module):
         scalars = []
         comp_loss = 0
         x = torch.cat([q, dq, ddq], dim=1)
-        out = torch.zeros(x.shape[0], self.n_selectors, device=x.device)
-        l2 = torch.ones(self.sz, self.n_selectors, device=x.device) / self.n_selectors
+        out = torch.zeros(x.shape[0], self.n_selectors, device=x.device)  # Denotes the output of the previous layer
+        l2 = torch.ones(self.sz, self.n_selectors, device=x.device) / self.n_selectors  # Starts with a uniform distribution, but why over the distributions? It should be over the outerproduct...
         for i, (selector, querie1) in enumerate(zip(self.selectors, self.queries1)):
             new_x = torch.cat([x, out], dim=1)  # Concatenate
             raw_outer_x = self._outer(new_x)  # Outer-product
@@ -177,12 +177,12 @@ class Net(torch.nn.Module):
             l2, scaling, g = selector(local_self_attention, l2)  # Selection head
             l2s.append(l2)
             scalars.append(scaling)
-            out = (raw_outer_x @ scalars[-1])  # Applies the scaled probabilities to the outer product
+            out = (raw_outer_x @ scalars[-1])  # Applies the scaled probabilities to the outer product, however does not sum up
             comp_loss = comp_loss + g + cst
         self.scalings = torch.stack(scalars, dim=0)
         self.weights = l2s
         self.out = out
-        result = out.sum(-1).unsqueeze(-1)
+        result = out.sum(-1).unsqueeze(-1)  # Here the summing up happens, to sum over all terms
         return result, comp_loss
 
 
@@ -192,9 +192,9 @@ class Syrenets(ml.IModelLearner):
         self.params = [0]
 
     def predict(self, x):
-        q, dq, ddq = x[0], x[1], x[2]
+        q, dq, ddq = x[0], x[1], x[2]  # Right now this method is only written for problems with 3 inputs, plus this is even completely unneccessary as those 3 inputs will be plugged together immediately in the next step by Net
         return self.model.predict(q, dq, ddq)
 
     def learn(self, x, y=None):
-        q, dq, ddq = x[0], x[1], x[2]
+        q, dq, ddq = x[0], x[1], x[2]  # Same here as above
         return self.model(q, dq, ddq)
