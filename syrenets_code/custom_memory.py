@@ -15,7 +15,7 @@ class PickleMemory():
 
     def save(self, data, name):
         with open(self.make_name(name), 'wb') as f:
-                pickle.dump(data, f)
+            pickle.dump(data, f)
 
     def torch_save(self, data, name):
         torch.save(data, self.make_name(name))
