@@ -32,7 +32,7 @@ class Evaluator():
             # training points were the worst performing ones. Later the lower half of them will be remembered and added
             # to the current minibatch to train on them again. Therefore, it is possible to keep a really weird (noisy?)
             # in the current batch forever. Not sure if that is common or smart ...
-            se = torch.zeros_like(model_input[0], device=model_input.device)
+            se = torch.zeros_like(model_input[:, 0], device=model_input.device)
             best_mse = np.inf  # Initialize the best MSE
             tic = time.perf_counter()  # Time counter
         # Iterations over mini batches
@@ -40,16 +40,17 @@ class Evaluator():
             with torch.no_grad():
                 new_x, new_y = self.data.get_train_mini_batch(i)  # Get in every iteration a new minibatch
                 # The training examples from the last batch which were the worst fit
-                worst_fit = se.argsort(0)[-round(new_x.shape[1] / 2):, 0]
-                model_input = torch.cat([new_x, model_input[:, worst_fit, :]],
-                                        dim=1).detach()  # Concatenate the new minibatch with parts (in a different order) of the one above; why?
+                worst_fit = se.argsort(0)[-round(new_x.shape[0] / 2):]
+                model_input = torch.cat([new_x, model_input[worst_fit, :]],
+                                        dim=0).detach()  # Concatenate the new minibatch with parts (in a different order) of the one above; why?
                 real_out = torch.cat([new_y, real_out[worst_fit, :]], dim=0).detach()  # Does the same now to y
             # If we change to arbitrary number of inputs we have to make sure that this will be changed as well,
             # since we cannot use lists later
-            model_input_leaf = [model_i.requires_grad_(True) for model_i in model_input]
-            raw_model_out, o = self.model.learn(model_input_leaf, real_out)
-            model_out = self.data.transform_output(raw_model_out, model_input_leaf)
-            se = (real_out - model_out).pow(2).mean(1, keepdim=True)
+            model_input = model_input.requires_grad_(True)
+            # model_input_leaf = [model_i.requires_grad_(True) for model_i in model_input]
+            raw_model_out, o = self.model.learn(model_input, real_out)
+            model_out = self.data.transform_output(raw_model_out, model_input)
+            se = (real_out - model_out).pow(2).mean(1, keepdim=False)
             mse = se.mean()
             self.model.params = [mse.detach().clone()]
             loss = mse.sum() + o.sum()
@@ -69,9 +70,10 @@ class Evaluator():
                     if self.visualizer.is_save:
                         self.memory.torch_save(self.best_model, 'best_model.pt')
                     x_test, y_test = self.data.get_test_batch()
-                x_test_leaf = [x_test_i.requires_grad_(True) for x_test_i in x_test]
-                raw_prediction = self.best_model.predict(x_test_leaf)
-                prediction = self.data.transform_output(raw_prediction, x_test_leaf)
+                # x_test_leaf = [x_test_i.requires_grad_(True) for x_test_i in x_test]
+                x_test = x_test.requires_grad_(True)
+                raw_prediction = self.best_model.predict(x_test)
+                prediction = self.data.transform_output(raw_prediction, x_test)
             else:
                 cnt += 1
                 if cnt % 2000 == 1999 and self.optimizer.param_groups[0]['lr'] > 1E-5:

@@ -150,8 +150,8 @@ class Net(torch.nn.Module):
         outer_matrix = outer_ops(inp, inp2)
         return outer_matrix
 
-    def predict(self, q, dq, ddq):
-        x = torch.cat([q, dq, ddq], dim=1)
+    def predict(self, x):
+        # x = torch.cat([q, dq, ddq], dim=1)
         out = torch.zeros(x.shape[0], self.n_selectors, device=x.device)
         for i, scaling in enumerate(self.scalings.to(x.device)):
             new_x = torch.cat([x, out], dim=1)
@@ -159,11 +159,11 @@ class Net(torch.nn.Module):
             out = (outer_x @ scaling)
         return out.sum(-1).unsqueeze(-1)
 
-    def forward(self, q, dq, ddq):
+    def forward(self, x):
         l2s = []
         scalars = []
         comp_loss = 0
-        x = torch.cat([q, dq, ddq], dim=1)
+        # x = torch.cat([q, dq, ddq], dim=1)  # (48,6)
         out = torch.zeros(x.shape[0], self.n_selectors, device=x.device)  # Denotes the output of the previous layer
         l2 = torch.ones(self.sz, self.n_selectors, device=x.device) / self.n_selectors  # Starts with a uniform distribution, but why over the distributions? It should be over the outerproduct...
         for i, (selector, querie1) in enumerate(zip(self.selectors, self.queries1)):
@@ -192,9 +192,9 @@ class Syrenets(ml.IModelLearner):
         self.params = [0]
 
     def predict(self, x):
-        q, dq, ddq = x[0], x[1], x[2]  # Right now this method is only written for problems with 3 inputs, plus this is even completely unneccessary as those 3 inputs will be plugged together immediately in the next step by Net
-        return self.model.predict(q, dq, ddq)
+        # q, dq, ddq = x[0], x[1], x[2]  # Right now this method is only written for problems with 3 inputs, plus this is even completely unneccessary as those 3 inputs will be plugged together immediately in the next step by Net
+        return self.model.predict(x)
 
     def learn(self, x, y=None):
-        q, dq, ddq = x[0], x[1], x[2]  # Same here as above
-        return self.model(q, dq, ddq)
+        # q, dq, ddq = x[0], x[1], x[2]  # Same here as above
+        return self.model(x)
