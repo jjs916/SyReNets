@@ -6,7 +6,7 @@ import model_learner as ml
 import data_generator as dtgen
 import visualizer_w_seed as vis_w_seed
 from custom_memory import PickleMemory
-
+import matplotlib.pyplot as plt
 
 class Evaluator():
     def __init__(self, model: ml.IModelLearner, data: dtgen.IDataGenerator, visualizer=vis_w_seed.IVisualizer):
@@ -36,6 +36,8 @@ class Evaluator():
             best_mse = np.inf  # Initialize the best MSE
             tic = time.perf_counter()  # Time counter
         # Iterations over mini batches
+        loss_list = []
+        mse_list = []
         for i in torch.arange(n_iterations):
             with torch.no_grad():
                 new_x, new_y = self.data.get_train_mini_batch(i)  # Get in every iteration a new minibatch
@@ -54,6 +56,8 @@ class Evaluator():
             mse = se.mean()
             self.model.params = [mse.detach().clone()]
             loss = mse.sum() + o.sum()
+            loss_list.append(loss)
+            mse_list.append(mse.sum())
             try:
                 loss.backward()
                 with torch.no_grad():
@@ -97,6 +101,16 @@ class Evaluator():
                         print(
                             'iteration: {}, loss: {:5f}, current train MSE: {}, lowers train MSE: {}, training time: {:0.4f}s'.format(
                                 i, loss.item(), mse, best_mse, toc - tic))
+        plt.close()
+        plt.plot([loss - min(loss_list) + 0.001 for loss in loss_list])
+        plt.title(f'Loss + { - min(loss_list) + 0.001}')
+        plt.yscale('log')
+        plt.savefig(self.memory.datetime + 'loss.png')
+        plt.close()
+        plt.plot(mse_list)
+        plt.yscale('log')
+        plt.savefig(self.memory.datetime + 'mse.png')
+        plt.close()
 
     def test(self):
         x_test, y_test = self.data.get_test_batch()

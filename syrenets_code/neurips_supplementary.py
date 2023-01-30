@@ -18,7 +18,7 @@ else:
 
 
 def run(seed, experiment, is_train=True, file_str='', n_inp=6, depth=3, n_sel=12, n_samples=32, n_mini_batch=1000,
-        n_iterations=100):
+        n_iterations=100, lambda_entropy=0.01):
     if experiment == 'direct':
         data = dtgen.Lagrangian(n_inp, n_samples, n_mini_batch, device=devices[0])
     elif experiment == 'indirect':
@@ -32,8 +32,12 @@ def run(seed, experiment, is_train=True, file_str='', n_inp=6, depth=3, n_sel=12
     visualizer_seed = vis_w_seed.LearnerVisualizer(depth, is_save=True)
     visualizer_seed._reg_seed(seed)
     if is_train:
-        syrenets_model = syrenets_learner.Syrenets(n_inp, depth, n_sel, use_autoencoder=True, device=devices[0])
+        syrenets_model = syrenets_learner.Syrenets(n_inp, depth, n_sel, use_autoencoder=True,
+                                                   lambda_entropy=lambda_entropy, device=devices[0])
         evaluator = Evaluator(syrenets_model, data, visualizer_seed)
+        info = {'lambda_entropy': lambda_entropy, 'n_inp': n_inp, 'depth': depth, 'samples': n_samples * n_mini_batch,
+                'n_iteration': n_iterations}
+        evaluator.memory.json_save(info, 'info')
         evaluator.train(n_iterations=n_iterations)
     else:
         syrenets_model = visualizer_seed.load_save(file_str, '', time=100)
@@ -46,7 +50,8 @@ def run(seed, experiment, is_train=True, file_str='', n_inp=6, depth=3, n_sel=12
         pause(100)
 
 
-def train(experiment: str, n_inp=6, depth=3, n_sel=12, n_samples=32, n_mini_batch=1000, n_iterations=1000):
+def train(experiment: str, n_inp=6, depth=3, n_sel=12, n_samples=32, n_mini_batch=1000, n_iterations=1000,
+          lambda_entropy=0.001):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
     torch.set_default_dtype(torch.float64)
@@ -64,7 +69,7 @@ def train(experiment: str, n_inp=6, depth=3, n_sel=12, n_samples=32, n_mini_batc
                  1557701051186569073]
     elif experiment == 'math':
         # 10 random seeds used for training
-        seeds = [11135967900375438520, 4706712063282134104]
+        seeds = [11135967900375438520]
     else:
         print('Experiment incorrectly specified')
         raise NotImplementedError
@@ -73,7 +78,7 @@ def train(experiment: str, n_inp=6, depth=3, n_sel=12, n_samples=32, n_mini_batc
         torch.manual_seed(rd)
         print('random seed is: {}'.format(rd))
         run(rd, experiment, is_train=True, n_inp=n_inp, depth=depth, n_sel=n_sel, n_samples=n_samples,
-            n_mini_batch=n_mini_batch, n_iterations=n_iterations)
+            n_mini_batch=n_mini_batch, n_iterations=n_iterations, lambda_entropy=lambda_entropy)
 
 
 def eval(experiment: str, model_name: str):

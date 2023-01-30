@@ -83,7 +83,7 @@ class MathematicalFormula(IDataGenerator):
         self.x_test, self.y_test = self._random_sample(n_test_samples, 1, device)
 
     def _random_sample(self, n_samples, n_mini_batch, device):
-        x = torch.rand(n_samples, 2, n_mini_batch, device=device)
+        x = 20 * torch.rand(n_samples, 2, n_mini_batch, device=device) - 10
         y = x[:, 0, :] ** 2 + x[:, 1, :]
         return x, y
 

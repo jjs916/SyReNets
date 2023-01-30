@@ -2,6 +2,7 @@ import datetime
 import os
 import pickle
 import torch
+import json
 
 class PickleMemory():
     def __init__(self):
@@ -20,6 +21,9 @@ class PickleMemory():
     def torch_save(self, data, name):
         torch.save(data, self.make_name(name))
 
+    def json_save(self, data, name):
+        with open(self.make_name(name), "w", encoding="utf8") as f:
+            json.dump(data, f)
     def load(self, name):
         with open(self.path+'/'+name, 'rb') as f:
             pick = pickle.load(f)

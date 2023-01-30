@@ -3,15 +3,19 @@ import model_learner as ml
 from toolbox_functions import get_size
 
 
-@torch.jit.script
+# @torch.jit.script
 def outer_ops(inp, inp2):
+    # Creates the outer product out of sum, prod, sin and cos
+    # Output dimension: n_mini_batch \times (m_sum + m_prod + m_sin + m_cos)
+    # m_sum = m_prod = \sum_{k=1}^{n_input+n_selectors) k
+    # m_sin = m_cos = n_input+n_selectors
     inp_sum = (inp + inp2) - torch.diag_embed(inp.squeeze(-1))
     triu = torch.triu(torch.ones_like(inp_sum, device=inp.device) == 1)
-    inp_sum = inp_sum[triu].view(inp.shape[0], -1)
+    inp_sum = inp_sum[triu].view(inp.shape[0], -1)  # x_1, x_1 + x_2, x_1 + x_2, ..., x_2, x_2 + x_3, ...
     inp_prod = inp * inp2
-    inp_prod = inp_prod[triu].view(inp.shape[0], -1)
-    inp_sin = torch.sin(inp).squeeze(-1)
-    inp_cos = torch.cos(inp).squeeze(-1)
+    inp_prod = inp_prod[triu].view(inp.shape[0], -1)  # x_1**2, x_1 * x_2, x_1 * x_2, ..., x_2**2, x_2 * x_3, ...
+    inp_sin = torch.sin(inp).squeeze(-1)  # sin(x_1), sin(x_2), ...
+    inp_cos = torch.cos(inp).squeeze(-1)  # cos(x_1), cos(x_2)
     return torch.cat([inp_sum, inp_prod, inp_sin, inp_cos], dim=1)
 
 
@@ -66,8 +70,9 @@ class ParallelHeadNet(torch.nn.Module):
 
 
 class SelectorsNet(torch.nn.Module):
-    def __init__(self, n_inp, n_out, n_heads=1, device=torch.device("cpu")):
+    def __init__(self, n_inp, n_out, n_heads=1, lambda_entropy=0.001, device=torch.device("cpu")):
         super().__init__()
+        self.lambda_entropy = lambda_entropy
         self.parallel_heads = ParallelHeadNet(n_inp, n_out, n_heads, device=device)
 
     def _reset_head(self, head_num):
@@ -77,9 +82,10 @@ class SelectorsNet(torch.nn.Module):
     def forward(self, attention, last_dist):
         new_dists, scaled_dist = self.parallel_heads.forward(attention, last_dist)
         gram_cross_entropy = -new_dists.t() @ torch.log(new_dists + 1E-5)
-        return new_dists, scaled_dist, 0.001 * gram_cross_entropy.diag().mean() - gram_cross_entropy.fill_diagonal_(
-            0).mean()  # \lambda_2 is fixed as 0.001 here (also the mean is being taken, opposite how it is shown in the paper), increasing it would help make the probability more concentrated; \lambda_3 on the other hand is fixed as 1
-
+        # \lambda_2 is fixed as 0.001 here (also the mean is being taken, opposite how it is shown in the paper),
+        # increasing it would help make the probability more concentrated; \lambda_3 on the other hand is fixed as 1
+        return new_dists, scaled_dist, self.lambda_entropy * gram_cross_entropy.diag().mean() - gram_cross_entropy.fill_diagonal_(
+            0).mean()
 
 class Autoencoder(torch.nn.Module):
     def __init__(self, n_inp, n_hidden, n_latent, device=torch.device("cpu")):
@@ -123,7 +129,8 @@ class IdentityAE(torch.nn.Module):
 
 
 class Net(torch.nn.Module):
-    def __init__(self, n_inp, depth=1, n_selectors=1, use_autoencoder=True, device=torch.device("cpu")):
+    def __init__(self, n_inp, depth=1, n_selectors=1, use_autoencoder=True, device=torch.device("cpu"),
+                 lambda_entropy=0.01):
         super().__init__()
         self.n_selectors = n_selectors
         self.device = device
@@ -131,7 +138,7 @@ class Net(torch.nn.Module):
         self.sz = sz
         latent_sz = max(n_inp, 16)
         self.selectors = torch.nn.ModuleList(
-            [SelectorsNet(latent_sz, sz, n_selectors, device=device) for _ in range(depth)])
+            [SelectorsNet(latent_sz, sz, n_selectors, lambda_entropy=lambda_entropy, device=device) for _ in range(depth)])
         self.last_scale_layer = torch.nn.Linear(1, 1, bias=False)
         self.scalings = []
         self.weights = []
@@ -165,7 +172,8 @@ class Net(torch.nn.Module):
         comp_loss = 0
         # x = torch.cat([q, dq, ddq], dim=1)  # (48,6)
         out = torch.zeros(x.shape[0], self.n_selectors, device=x.device)  # Denotes the output of the previous layer
-        l2 = torch.ones(self.sz, self.n_selectors, device=x.device) / self.n_selectors  # Starts with a uniform distribution, but why over the distributions? It should be over the outerproduct...
+        l2 = torch.ones(self.sz, self.n_selectors,
+                        device=x.device) / self.n_selectors  # Starts with a uniform distribution, but why over the distributions? It should be over the outerproduct...
         for i, (selector, querie1) in enumerate(zip(self.selectors, self.queries1)):
             new_x = torch.cat([x, out], dim=1)  # Concatenate
             raw_outer_x = self._outer(new_x)  # Outer-product
@@ -177,7 +185,8 @@ class Net(torch.nn.Module):
             l2, scaling, g = selector(local_self_attention, l2)  # Selection head
             l2s.append(l2)
             scalars.append(scaling)
-            out = (raw_outer_x @ scalars[-1])  # Applies the scaled probabilities to the outer product, however does not sum up
+            out = (raw_outer_x @ scalars[
+                -1])  # Applies the scaled probabilities to the outer product, however does not sum up
             comp_loss = comp_loss + g + cst
         self.scalings = torch.stack(scalars, dim=0)
         self.weights = l2s
@@ -187,8 +196,8 @@ class Net(torch.nn.Module):
 
 
 class Syrenets(ml.IModelLearner):
-    def __init__(self, n_inp, depth=1, n_selectors=1, use_autoencoder=True, device=torch.device("cpu")):
-        self.model = Net(n_inp, depth, n_selectors, use_autoencoder, device=device).to(device)
+    def __init__(self, n_inp, depth=1, n_selectors=1, lambda_entropy=0.001, use_autoencoder=True, device=torch.device("cpu")):
+        self.model = Net(n_inp, depth, n_selectors, use_autoencoder, lambda_entropy=lambda_entropy, device=device).to(device)
         self.params = [0]
 
     def predict(self, x):
