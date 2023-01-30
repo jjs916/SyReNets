@@ -45,8 +45,10 @@ def calculate_torque(lagrangian, q, qdot, qdotdot, create_graph=True):
 
 
 def func(q, qdot, qdotdot, is_compute_torque=True):
-    T = 0.5*(M1/3 + M2)*L1**2*qdot[:,0]**2 + 0.5*(M2/3)*L2**2*qdot[:,1]**2 + 0.5*M2*L1*L2*qdot[:,0]*qdot[:,1]*torch.cos(q[:,0]-q[:,1])
-    V = -(M1/2+M2)*9.81*L1*torch.cos(q[:,0]) - (M2/2)*9.81*L2*torch.cos(q[:,1])
+    # T = 0.5*(M1/3 + M2)*L1**2*qdot[:,0]**2 + 0.5*(M2/3)*L2**2*qdot[:,1]**2 + 0.5*M2*L1*L2*qdot[:,0]*qdot[:,1]*torch.cos(q[:,0]-q[:,1])
+    # V = -(M1/2+M2)*9.81*L1*torch.cos(q[:,0]) - (M2/2)*9.81*L2*torch.cos(q[:,1])
+    T = 0.5*M1*qdot*qdot
+    V = 0.0
     eq = T - V
     if is_compute_torque:
         return calculate_torque(eq, q, qdot, qdotdot)
