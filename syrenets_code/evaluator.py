@@ -109,7 +109,7 @@ class Evaluator():
         plt.yscale('log')
         plt.savefig(self.memory.datetime + 'loss.png')
         plt.close()
-        plt.plot(mse_list)
+        plt.plot(torch.tensor(mse_list).cpu().detach().numpy())
         plt.yscale('log')
         plt.savefig(self.memory.datetime + 'mse.png')
         plt.close()
