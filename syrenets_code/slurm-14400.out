@@ -1,0 +1,100 @@
+/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/torch/cuda/__init__.py:145: UserWarning: 
+NVIDIA GeForce RTX 3090 with CUDA capability sm_86 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_37 sm_50 sm_60 sm_70.
+If you want to use the NVIDIA GeForce RTX 3090 GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+
+  warnings.warn(incompatible_device_warn.format(device_name, capability, " ".join(arch_list), device_name))
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+Traceback (most recent call last):
+  File "train.py", line 22, in <module>
+    n_iterations=int(args.number_iterations), lambda_entropy=float(args.lambda_entropy))
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/neurips_supplementary.py", line 82, in train
+    n_mini_batch=n_mini_batch, n_iterations=n_iterations, lambda_entropy=lambda_entropy)
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/neurips_supplementary.py", line 28, in run
+    experiment_name=experiment[4:])
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/data_generator.py", line 83, in __init__
+    self.x_train, self.y_train = self._random_sample(n_samples, n_mini_batch, device)
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/data_generator.py", line 97, in _random_sample
+    x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10
+RuntimeError: CUDA error: no kernel image is available for execution on the device
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/torch/cuda/__init__.py:145: UserWarning: 
+NVIDIA GeForce RTX 3090 with CUDA capability sm_86 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_37 sm_50 sm_60 sm_70.
+If you want to use the NVIDIA GeForce RTX 3090 GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+
+  warnings.warn(incompatible_device_warn.format(device_name, capability, " ".join(arch_list), device_name))
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+Traceback (most recent call last):
+  File "train.py", line 22, in <module>
+    n_iterations=int(args.number_iterations), lambda_entropy=float(args.lambda_entropy))
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/neurips_supplementary.py", line 82, in train
+    n_mini_batch=n_mini_batch, n_iterations=n_iterations, lambda_entropy=lambda_entropy)
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/neurips_supplementary.py", line 28, in run
+    experiment_name=experiment[4:])
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/data_generator.py", line 83, in __init__
+    self.x_train, self.y_train = self._random_sample(n_samples, n_mini_batch, device)
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/data_generator.py", line 97, in _random_sample
+    x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10
+RuntimeError: CUDA error: no kernel image is available for execution on the device
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/torch/cuda/__init__.py:145: UserWarning: 
+NVIDIA GeForce RTX 3090 with CUDA capability sm_86 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_37 sm_50 sm_60 sm_70.
+If you want to use the NVIDIA GeForce RTX 3090 GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+
+  warnings.warn(incompatible_device_warn.format(device_name, capability, " ".join(arch_list), device_name))
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+Traceback (most recent call last):
+  File "train.py", line 22, in <module>
+    n_iterations=int(args.number_iterations), lambda_entropy=float(args.lambda_entropy))
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/neurips_supplementary.py", line 82, in train
+    n_mini_batch=n_mini_batch, n_iterations=n_iterations, lambda_entropy=lambda_entropy)
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/neurips_supplementary.py", line 28, in run
+    experiment_name=experiment[4:])
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/data_generator.py", line 83, in __init__
+    self.x_train, self.y_train = self._random_sample(n_samples, n_mini_batch, device)
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/data_generator.py", line 97, in _random_sample
+    x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10
+RuntimeError: CUDA error: no kernel image is available for execution on the device
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/torch/cuda/__init__.py:145: UserWarning: 
+NVIDIA GeForce RTX 3090 with CUDA capability sm_86 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_37 sm_50 sm_60 sm_70.
+If you want to use the NVIDIA GeForce RTX 3090 GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+
+  warnings.warn(incompatible_device_warn.format(device_name, capability, " ".join(arch_list), device_name))
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+Traceback (most recent call last):
+  File "train.py", line 22, in <module>
+    n_iterations=int(args.number_iterations), lambda_entropy=float(args.lambda_entropy))
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/neurips_supplementary.py", line 82, in train
+    n_mini_batch=n_mini_batch, n_iterations=n_iterations, lambda_entropy=lambda_entropy)
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/neurips_supplementary.py", line 28, in run
+    experiment_name=experiment[4:])
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/data_generator.py", line 83, in __init__
+    self.x_train, self.y_train = self._random_sample(n_samples, n_mini_batch, device)
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/data_generator.py", line 97, in _random_sample
+    x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10
+RuntimeError: CUDA error: no kernel image is available for execution on the device
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.

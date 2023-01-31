@@ -1,0 +1,40 @@
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+model's performance on test data:
+mse: 11796.316358464801, rmse: 108.61084825405241, mean: 77.1795894457942
+std: 76.41864840973834, min: -16.07834167608757, max: 331.46298333892446
+
+iteration: 0, loss: 14215.749235, current train MSE: 14215.912803353334, lowers train MSE: 14215.912803353334, training time: 0.9097s
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+model's performance on test data:
+mse: 11796.316358464801, rmse: 108.61084825405241, mean: 77.1795894457942
+std: 76.41864840973834, min: -16.07834167608757, max: 331.46298333892446
+
+iteration: 0, loss: 14215.781124, current train MSE: 14215.912803353334, lowers train MSE: 14215.912803353334, training time: 0.6013s
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+model's performance on test data:
+mse: 11796.316358464801, rmse: 108.61084825405241, mean: 77.1795894457942
+std: 76.41864840973834, min: -16.07834167608757, max: 331.46298333892446
+
+iteration: 0, loss: 14216.100011, current train MSE: 14215.912803353334, lowers train MSE: 14215.912803353334, training time: 0.6126s
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+model's performance on test data:
+mse: 11796.316358464801, rmse: 108.61084825405241, mean: 77.1795894457942
+std: 76.41864840973834, min: -16.07834167608757, max: 331.46298333892446
+
+iteration: 0, loss: 14219.288888, current train MSE: 14215.912803353334, lowers train MSE: 14215.912803353334, training time: 0.5934s
