@@ -71,10 +71,11 @@ def func(q, qdot, qdotdot, is_compute_torque=True):
 
 class MathematicalFormula(IDataGenerator):
 
-    def __init__(self, n_inp, n_samples, n_mini_batch, n_test_samples=10000, device=torch.device("cpu")):
+    def __init__(self, n_inp, n_samples, n_mini_batch, n_test_samples=10000, device=torch.device("cpu"),
+                 experiment_name='1'):
         super().__init__(n_inp, n_samples, n_mini_batch, n_test_samples, device)
         self.n_mini_batch = n_mini_batch
-        self.n_inp = n_inp
+        self.experiment_name = experiment_name
         self.n_samples = n_samples
         self.n_test_samples = n_test_samples
         self.device = device
@@ -83,8 +84,34 @@ class MathematicalFormula(IDataGenerator):
         self.x_test, self.y_test = self._random_sample(n_test_samples, 1, device)
 
     def _random_sample(self, n_samples, n_mini_batch, device):
-        x = 20 * torch.rand(n_samples, 2, n_mini_batch, device=device) - 10
-        y = x[:, 0, :] ** 2 + x[:, 1, :]
+        if self.experiment_name == '1':
+            self.n_inp = 2
+            x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10
+            y = x[:, 0, :] ** 2 + x[:, 1, :]
+        elif self.experiment_name == '2':
+            self.n_inp = 2
+            x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10
+            y = 2.3 * x[:, 0, :] ** 2 + x[:, 1, :] * x[:, 0, :] - 0.5 * x[:, 1, :]
+        elif self.experiment_name == '3':
+            self.n_inp = 2
+            x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10
+            y = x[:, 0, :] ** 2 + x[:, 1, :] * x[:, 0, :] - 2 * x[:, 1, :] ** 3
+        elif self.experiment_name == '4':
+            self.n_inp = 2
+            x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10
+            y = x[:, 0, :] ** 2 + x[:, 1, :]
+        elif self.experiment_name == '5':
+            self.n_inp = 2
+            x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10
+            y = x[:, 0, :] ** 2 + x[:, 1, :]
+        elif self.experiment_name == '6':
+            self.n_inp = 2
+            x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10
+            y = x[:, 0, :] ** 2 + x[:, 1, :]
+        elif self.experiment_name == '7':
+            self.n_inp = 2
+            x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10
+            y = x[:, 0, :] ** 2 + x[:, 1, :]
         return x, y
 
     def get_train_mini_batch(self, n):

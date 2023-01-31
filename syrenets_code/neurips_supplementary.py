@@ -23,9 +23,10 @@ def run(seed, experiment, is_train=True, file_str='', n_inp=6, depth=3, n_sel=12
         data = dtgen.Lagrangian(n_inp, n_samples, n_mini_batch, device=devices[0])
     elif experiment == 'indirect':
         data = dtgen.LagrangianTorque(n_inp, n_samples, n_mini_batch, device=devices[0])
-    elif experiment == 'math':
-        data = dtgen.MathematicalFormula(n_inp, n_samples, n_mini_batch, device=devices[0])
-        n_inp = 2
+    elif experiment.startswith('math'):
+        data = dtgen.MathematicalFormula(n_inp, n_samples, n_mini_batch, device=devices[0],
+                                         experiment_name=experiment[4:])
+        n_inp = data.n_inp
     else:
         print('Experiment incorrectly specified')
         raise NotImplementedError
@@ -35,7 +36,7 @@ def run(seed, experiment, is_train=True, file_str='', n_inp=6, depth=3, n_sel=12
         syrenets_model = syrenets_learner.Syrenets(n_inp, depth, n_sel, use_autoencoder=True,
                                                    lambda_entropy=lambda_entropy, device=devices[0])
         evaluator = Evaluator(syrenets_model, data, visualizer_seed)
-        info = {'lambda_entropy': lambda_entropy, 'n_inp': n_inp, 'depth': depth, 'samples': n_samples * n_mini_batch,
+        info = {'experiment': experiment, 'lambda_entropy': lambda_entropy, 'n_inp': n_inp, 'depth': depth, 'samples': n_samples * n_mini_batch,
                 'n_iteration': n_iterations}
         evaluator.memory.json_save(info, 'info')
         evaluator.train(n_iterations=n_iterations)
@@ -67,7 +68,7 @@ def train(experiment: str, n_inp=6, depth=3, n_sel=12, n_samples=32, n_mini_batc
                  16778785190008374537, \
                  513093016403998969, 8044476352635938794, 12365878020051336999, 6692205310915783516,
                  1557701051186569073]
-    elif experiment == 'math':
+    elif experiment.startswith('math'):
         # 10 random seeds used for training
         seeds = [11135967900375438520]
     else:
