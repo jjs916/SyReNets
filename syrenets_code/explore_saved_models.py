@@ -5,12 +5,12 @@ from visualizer_w_seed import LearnerVisualizer
 import matplotlib.pyplot as plt
 
 memory = PickleMemory()
+device = 'cpu'
 
-model = memory.torch_load('20230130_181015_best_model.pt')
+model = torch.load('20230131_113004_best_model.pt', map_location=torch.device(device))
 
 scalings = model.model.scalings
 
-device = 'cpu'
 
 n_samples = 3
 dim = 2
@@ -20,7 +20,7 @@ y
 model.predict(x)
 
 error_stats = ErrorStatistics()
-error_stats.load(memory.load('20230130_152539_error_stats.pt'))
+error_stats.load(memory.load('20230131_113004_best_model.pt'))
 visualizer = LearnerVisualizer(depth=0)
 visualizer.error_stats = error_stats
 visualizer.plot_error_stats()

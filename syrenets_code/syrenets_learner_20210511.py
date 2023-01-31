@@ -3,7 +3,7 @@ import model_learner as ml
 from toolbox_functions import get_size
 
 
-# @torch.jit.script
+@torch.jit.script
 def outer_ops(inp, inp2):
     # Creates the outer product out of sum, prod, sin and cos
     # Output dimension: n_mini_batch \times (m_sum + m_prod + m_sin + m_cos)

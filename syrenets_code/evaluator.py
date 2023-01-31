@@ -8,6 +8,7 @@ import visualizer_w_seed as vis_w_seed
 from custom_memory import PickleMemory
 import matplotlib.pyplot as plt
 
+
 class Evaluator():
     def __init__(self, model: ml.IModelLearner, data: dtgen.IDataGenerator, visualizer=vis_w_seed.IVisualizer):
         self.model = model
@@ -102,8 +103,9 @@ class Evaluator():
                             'iteration: {}, loss: {:5f}, current train MSE: {}, lowers train MSE: {}, training time: {:0.4f}s'.format(
                                 i, loss.item(), mse, best_mse, toc - tic))
         plt.close()
-        plt.plot([loss - min(loss_list) + 0.001 for loss in loss_list])
-        plt.title(f'Loss + { - min(loss_list) + 0.001}')
+        plt.plot(
+            torch.tensor([loss - min(torch.tensor(loss_list)) + 0.001 for loss in loss_list]).cpu().detach().numpy())
+        plt.title(f'Loss + {- min(torch.tensor(loss_list).cpu().detach().numpy()) + 0.001}')
         plt.yscale('log')
         plt.savefig(self.memory.datetime + 'loss.png')
         plt.close()
