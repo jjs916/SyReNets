@@ -1,0 +1,57 @@
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+model's performance on test data:
+mse: 2063.6239254730617, rmse: 45.42712763837333, mean: 33.684197348004815
+std: 30.479957455315873, min: -10.523525471922445, max: 110.13866041026681
+
+iteration: 0, loss: 2183.861641, current train MSE: 2183.674432729052, lowers train MSE: 2183.674432729052, training time: 0.2013s
+model's performance on test data:
+mse: 1816.8258632400193, rmse: 42.624240324491645, mean: -2.337526602131351
+std: 42.56076173323503, min: -104.83231515903258, max: 116.07114750059314
+
+iteration: 2000, loss: -4.195514, current train MSE: 0.03587629308368218, lowers train MSE: 0.02550860589687682, training time: 79.4527s
+model's performance on test data:
+mse: 1813.7011922290426, rmse: 42.587570865559385, mean: -2.36555870626945
+std: 42.52248615916046, min: -104.45217147916821, max: 116.17469313402059
+
+iteration: 4000, loss: -6.554656, current train MSE: 0.006484989581683522, lowers train MSE: 0.0019781221351829583, training time: 166.2569s
+model's performance on test data:
+mse: 1812.8063667486817, rmse: 42.577063857770675, mean: -2.383673130760432
+std: 42.510950864705826, min: -104.34043235120254, max: 116.15764405410314
+
+iteration: 6000, loss: -7.480587, current train MSE: 0.007392244725120589, lowers train MSE: 0.00023762599695608934, training time: 262.8077s
+model's performance on test data:
+mse: 1812.6116877145498, rmse: 42.57477760029464, mean: -2.374878803515916
+std: 42.509153224618636, min: -104.27533673843794, max: 116.207804582314
+
+iteration: 8000, loss: -9.350286, current train MSE: 0.0010327471108619681, lowers train MSE: 1.2465865168173716e-05, training time: 368.3525s
+Traceback (most recent call last):
+  File "train.py", line 22, in <module>
+    n_iterations=int(args.number_iterations), lambda_entropy=float(args.lambda_entropy))
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/neurips_supplementary.py", line 81, in train
+    n_mini_batch=n_mini_batch, n_iterations=n_iterations, lambda_entropy=lambda_entropy)
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/neurips_supplementary.py", line 41, in run
+    evaluator.train(n_iterations=n_iterations)
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/evaluator.py", line 105, in train
+    plt.plot([loss - min(loss_list) + 0.001 for loss in loss_list])
+  File "/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/matplotlib/pyplot.py", line 2771, in plot
+    **({"data": data} if data is not None else {}), **kwargs)
+  File "/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/matplotlib/axes/_axes.py", line 1632, in plot
+    lines = [*self._get_lines(*args, data=data, **kwargs)]
+  File "/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/matplotlib/axes/_base.py", line 312, in __call__
+    yield from self._plot_args(this, kwargs)
+  File "/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/matplotlib/axes/_base.py", line 490, in _plot_args
+    x, y = index_of(xy[-1])
+  File "/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/matplotlib/cbook/__init__.py", line 1614, in index_of
+    y = _check_1d(y)
+  File "/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/matplotlib/cbook/__init__.py", line 1306, in _check_1d
+    return np.atleast_1d(x)
+  File "<__array_function__ internals>", line 6, in atleast_1d
+  File "/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/numpy/core/shape_base.py", line 65, in atleast_1d
+    ary = asanyarray(ary)
+  File "/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/torch/_tensor.py", line 732, in __array__
+    return self.numpy()
+TypeError: can't convert cuda:0 device type tensor to numpy. Use Tensor.cpu() to copy the tensor to host memory first.
