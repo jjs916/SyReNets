@@ -7,27 +7,7 @@ model's performance on test data:
 mse: 2063.6239254730617, rmse: 45.42712763837333, mean: 33.684197348004815
 std: 30.479957455315873, min: -10.523525471922445, max: 110.13866041026681
 
-iteration: 0, loss: 2183.510864, current train MSE: 2183.674432729052, lowers train MSE: 2183.674432729052, training time: 0.0873s
-model's performance on test data:
-mse: 1818.7521207374227, rmse: 42.646830137038584, mean: -2.3790744394296373
-std: 42.5810848418788, min: -104.89547030225741, max: 116.1394865809101
-
-iteration: 2000, loss: -4.344255, current train MSE: 0.029275147833049166, lowers train MSE: 0.02608171551325267, training time: 82.7078s
-model's performance on test data:
-mse: 1813.3876517121, rmse: 42.58388957941841, mean: -2.3690321858136922
-std: 42.51860572528279, min: -104.44625712125048, max: 116.1513567202107
-
-iteration: 4000, loss: -6.706194, current train MSE: 0.0024044232730462516, lowers train MSE: 0.0014709100039705415, training time: 172.0514s
-model's performance on test data:
-mse: 1812.7644439928956, rmse: 42.576571538733546, mean: -2.387441956995926
-std: 42.510246262399626, min: -104.32063832720675, max: 116.16842434701597
-
-iteration: 6000, loss: -7.675993, current train MSE: 0.0013958819058324215, lowers train MSE: 0.0002546810819869791, training time: 269.2051s
-model's performance on test data:
-mse: 1812.5546119226608, rmse: 42.57410729448899, mean: -2.3744645560944386
-std: 42.508505005037115, min: -104.27407568887973, max: 116.20379845915842
-
-iteration: 8000, loss: -9.423974, current train MSE: 2.6805439189376e-05, lowers train MSE: 8.850990341251051e-06, training time: 373.8836s
+iteration: 0, loss: 2183.510864, current train MSE: 2183.674432729052, lowers train MSE: 2183.674432729052, training time: 1.2146s
 Traceback (most recent call last):
   File "train.py", line 22, in <module>
     n_iterations=int(args.number_iterations), lambda_entropy=float(args.lambda_entropy))
@@ -35,8 +15,8 @@ Traceback (most recent call last):
     n_mini_batch=n_mini_batch, n_iterations=n_iterations, lambda_entropy=lambda_entropy)
   File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/neurips_supplementary.py", line 41, in run
     evaluator.train(n_iterations=n_iterations)
-  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/evaluator.py", line 105, in train
-    plt.plot([loss - min(loss_list) + 0.001 for loss in loss_list])
+  File "/home/math/scholl/projects/physicalLawLearning/SyReNets/syrenets_code/evaluator.py", line 112, in train
+    plt.plot(mse_list)
   File "/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/matplotlib/pyplot.py", line 2771, in plot
     **({"data": data} if data is not None else {}), **kwargs)
   File "/home/groups/ai/scholl/miniconda3/envs/srbench/lib/python3.7/site-packages/matplotlib/axes/_axes.py", line 1632, in plot
