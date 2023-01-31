@@ -1,0 +1,10 @@
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+model's performance on test data:
+mse: 2063.6239254730617, rmse: 45.42712763837333, mean: 33.684197348004815
+std: 30.479957455315873, min: -10.523525471922445, max: 110.13866041026681
+
+iteration: 0, loss: 2183.510864, current train MSE: 2183.674432729052, lowers train MSE: 2183.674432729052, training time: 0.5966s
