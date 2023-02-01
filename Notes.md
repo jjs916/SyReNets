@@ -6,7 +6,7 @@ Math1: $x\in\mathbb{R}^2$, $y=x_1^2+x_2$
 Works well ( $\lambda_2=0.001,0.01,0.1,1$ )
 
 
-Math2: $x\in\mathbb{R}^2$, $y=2.3x_1^2+2x_1x_2-x0.5x_2$
+Math2: $x\in\mathbb{R}^2$, $y=2.3x_1^2+2x_1x_2-0.5x_2$
 
 Math3: $x\in\mathbb{R}^2$, $y=x_1^2+x_1x_2-2x_2^3$
 
