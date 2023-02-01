@@ -38,3 +38,123 @@ iteration: 8000, loss: -32.897012, current train MSE: 0.0003180916968627391, low
 reduced lr to 1e-05
 ##########
 
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+model's performance on test data:
+mse: 2046.0118268527376, rmse: 45.2328622447523, mean: 33.41919774134177
+std: 30.482750638406156, min: -11.484332352365888, max: 109.35513658795098
+
+iteration: 0, loss: 2134.004771, current train MSE: 2137.3735474957766, lowers train MSE: 2137.3735474957766, training time: 1.2069s
+model's performance on test data:
+mse: 1812.5291949091168, rmse: 42.57380879025409, mean: -2.372341738327851
+std: 42.508324559726624, min: -104.28313888640355, max: 116.19671765108784
+
+iteration: 2000, loss: -23.452040, current train MSE: 0.0007326222577872743, lowers train MSE: 2.3398501851289416e-05, training time: 153.1063s
+model's performance on test data:
+mse: 1812.3123646411048, rmse: 42.57126219224777, mean: -2.3718715556873002
+std: 42.50580019888263, min: -104.2634822078736, max: 116.2075614767695
+
+iteration: 4000, loss: -29.991037, current train MSE: 0.0001612939979002949, lowers train MSE: 1.170556880214522e-05, training time: 308.8847s
+model's performance on test data:
+mse: 1812.4457189597879, rmse: 42.572828411555975, mean: -2.374105612581487
+std: 42.50724415813269, min: -104.2706289426592, max: 116.20559836330952
+
+iteration: 6000, loss: -32.693508, current train MSE: 0.002333845228997408, lowers train MSE: 1.1210406884779161e-05, training time: 472.5675s
+
+##########
+reduced lr to 0.0001
+##########
+
+model's performance on test data:
+mse: 1812.4457189597879, rmse: 42.572828411555975, mean: -2.374105612581487
+std: 42.50724415813269, min: -104.2706289426592, max: 116.20559836330952
+
+iteration: 8000, loss: -32.828342, current train MSE: 0.00020144421838780828, lowers train MSE: 1.1210406884779161e-05, training time: 644.7901s
+
+##########
+reduced lr to 1e-05
+##########
+
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+model's performance on test data:
+mse: 2046.0118268527376, rmse: 45.2328622447523, mean: 33.41919774134177
+std: 30.482750638406156, min: -11.484332352365888, max: 109.35513658795098
+
+iteration: 0, loss: 2134.763970, current train MSE: 2137.3735474957766, lowers train MSE: 2137.3735474957766, training time: 1.1891s
+model's performance on test data:
+mse: 1812.5931532114462, rmse: 42.57455992974497, mean: -2.372967717360995
+std: 42.50904193955788, min: -104.28170667908174, max: 116.20119935636302
+
+iteration: 2000, loss: -23.014263, current train MSE: 0.0003712922201044279, lowers train MSE: 2.4420898578670744e-05, training time: 152.3680s
+model's performance on test data:
+mse: 1812.4634026838858, rmse: 42.57303609896628, mean: -2.3724619075987485
+std: 42.50754394688477, min: -104.27107680558937, max: 116.20789136416137
+
+iteration: 4000, loss: -29.732717, current train MSE: 1.611188500215644e-05, lowers train MSE: 5.181127485043339e-06, training time: 308.4492s
+model's performance on test data:
+mse: 1812.4984947128753, rmse: 42.573448236111616, mean: -2.3733227426721495
+std: 42.50790867657971, min: -104.27144371069093, max: 116.20570658342375
+
+iteration: 6000, loss: -32.627884, current train MSE: 0.003077934101597884, lowers train MSE: 6.479715463440399e-07, training time: 471.8212s
+
+##########
+reduced lr to 0.0001
+##########
+
+model's performance on test data:
+mse: 1812.4984947128753, rmse: 42.573448236111616, mean: -2.3733227426721495
+std: 42.50790867657971, min: -104.27144371069093, max: 116.20570658342375
+
+iteration: 8000, loss: -32.845286, current train MSE: 0.0020396377335095664, lowers train MSE: 6.479715463440399e-07, training time: 643.9523s
+
+##########
+reduced lr to 1e-05
+##########
+
+Running on the GPU0
+
+#### starting new seed ####
+
+random seed is: 11135967900375438520
+model's performance on test data:
+mse: 2046.0118268527376, rmse: 45.2328622447523, mean: 33.41919774134177
+std: 30.482750638406156, min: -11.484332352365888, max: 109.35513658795098
+
+iteration: 0, loss: 2142.355961, current train MSE: 2137.3735474957766, lowers train MSE: 2137.3735474957766, training time: 1.2093s
+model's performance on test data:
+mse: 1812.5964090641114, rmse: 42.57459816679555, mean: -2.37255630328974
+std: 42.50910320166581, min: -104.27751256225551, max: 116.20316141629083
+
+iteration: 2000, loss: -19.263760, current train MSE: 0.0015367017173116672, lowers train MSE: 3.793246672405018e-05, training time: 150.7362s
+model's performance on test data:
+mse: 1812.4389615540638, rmse: 42.57274904858816, mean: -2.369693153174519
+std: 42.507410892405986, min: -104.2693669983282, max: 116.2082278601444
+
+iteration: 4000, loss: -29.034143, current train MSE: 0.005443695081431322, lowers train MSE: 2.471574601397099e-05, training time: 305.5705s
+
+##########
+reduced lr to 0.0001
+##########
+
+model's performance on test data:
+mse: 1812.4389615540638, rmse: 42.57274904858816, mean: -2.369693153174519
+std: 42.507410892405986, min: -104.2693669983282, max: 116.2082278601444
+
+iteration: 6000, loss: -29.989131, current train MSE: 0.0030886665873420503, lowers train MSE: 2.471574601397099e-05, training time: 468.8701s
+
+##########
+reduced lr to 1e-05
+##########
+
+model's performance on test data:
+mse: 1812.4389615540638, rmse: 42.57274904858816, mean: -2.369693153174519
+std: 42.507410892405986, min: -104.2693669983282, max: 116.2082278601444
+
+iteration: 8000, loss: -30.107415, current train MSE: 0.000549668815591717, lowers train MSE: 2.471574601397099e-05, training time: 641.2376s
