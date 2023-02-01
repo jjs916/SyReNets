@@ -27,19 +27,24 @@ def run(seed, experiment, is_train=True, file_str='', n_inp=6, depth=3, n_sel=12
         data = dtgen.MathematicalFormula(n_inp, n_samples, n_mini_batch, device=devices[0],
                                          experiment_name=experiment[4:])
         n_inp = data.n_inp
+        input_names = data.input_names
     else:
         print('Experiment incorrectly specified')
         raise NotImplementedError
     visualizer_seed = vis_w_seed.LearnerVisualizer(depth, is_save=True)
     visualizer_seed._reg_seed(seed)
     if is_train:
-        syrenets_model = syrenets_learner.Syrenets(n_inp, depth, n_sel, use_autoencoder=True,
+        syrenets_model = syrenets_learner.Syrenets(n_inp, depth, n_sel, use_autoencoder=True, input_names=input_names,
                                                    lambda_entropy=lambda_entropy, device=devices[0])
         evaluator = Evaluator(syrenets_model, data, visualizer_seed)
-        info = {'experiment': experiment, 'lambda_entropy': lambda_entropy, 'n_inp': n_inp, 'depth': depth, 'samples': n_samples * n_mini_batch,
-                'n_iteration': n_iterations}
-        evaluator.memory.json_save(info, 'info')
         evaluator.train(n_iterations=n_iterations)
+
+        mse = evaluator.test()
+        formula = syrenets_model.get_formula()
+        info = {'experiment': experiment, 'lambda_entropy': lambda_entropy, 'n_inp': n_inp, 'depth': depth,
+                'n_selection_heads': n_sel, 'samples': n_samples * n_mini_batch, 'n_iteration': n_iterations,
+                'rmse': torch.sqrt(mse).item(), 'formula': formula}
+        evaluator.memory.json_save(info, 'info')
     else:
         syrenets_model = visualizer_seed.load_save(file_str, '', time=100)
         # do something with the model

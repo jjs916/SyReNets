@@ -1,6 +1,7 @@
 import torch
 import model_learner as ml
 from toolbox_functions import get_size
+import copy
 
 
 @torch.jit.script
@@ -87,6 +88,7 @@ class SelectorsNet(torch.nn.Module):
         return new_dists, scaled_dist, self.lambda_entropy * gram_cross_entropy.diag().mean() - gram_cross_entropy.fill_diagonal_(
             0).mean()
 
+
 class Autoencoder(torch.nn.Module):
     def __init__(self, n_inp, n_hidden, n_latent, device=torch.device("cpu")):
         super().__init__()
@@ -138,7 +140,8 @@ class Net(torch.nn.Module):
         self.sz = sz
         latent_sz = max(n_inp, 16)
         self.selectors = torch.nn.ModuleList(
-            [SelectorsNet(latent_sz, sz, n_selectors, lambda_entropy=lambda_entropy, device=device) for _ in range(depth)])
+            [SelectorsNet(latent_sz, sz, n_selectors, lambda_entropy=lambda_entropy, device=device) for _ in
+             range(depth)])
         self.last_scale_layer = torch.nn.Linear(1, 1, bias=False)
         self.scalings = []
         self.weights = []
@@ -196,9 +199,13 @@ class Net(torch.nn.Module):
 
 
 class Syrenets(ml.IModelLearner):
-    def __init__(self, n_inp, depth=1, n_selectors=1, lambda_entropy=0.001, use_autoencoder=True, device=torch.device("cpu")):
-        self.model = Net(n_inp, depth, n_selectors, use_autoencoder, lambda_entropy=lambda_entropy, device=device).to(device)
+    def __init__(self, n_inp, depth=1, n_selectors=1, lambda_entropy=0.001, use_autoencoder=True,
+                 device=torch.device("cpu"), input_names=[]):
+        self.model = Net(n_inp, depth, n_selectors, use_autoencoder, lambda_entropy=lambda_entropy, device=device).to(
+            device)
+        self.n_inp = n_inp
         self.params = [0]
+        self.input_names = input_names
 
     def predict(self, x):
         # q, dq, ddq = x[0], x[1], x[2]  # Right now this method is only written for problems with 3 inputs, plus this is even completely unneccessary as those 3 inputs will be plugged together immediately in the next step by Net
@@ -207,3 +214,47 @@ class Syrenets(ml.IModelLearner):
     def learn(self, x, y=None):
         # q, dq, ddq = x[0], x[1], x[2]  # Same here as above
         return self.model(x)
+
+    @staticmethod
+    def __get_outer_names(variable_names):
+        outer_names = []
+        for i, variable_name in enumerate(variable_names):
+            outer_names.append(variable_name)
+            for variable_name_2 in variable_names[i + 1:]:
+                outer_names.append(f'({variable_name} + {variable_name_2})')
+        for i, variable_name in enumerate(variable_names):
+            outer_names.append(f'{variable_name}^2')
+            for variable_name_2 in variable_names[i + 1:]:
+                outer_names.append(f'{variable_name} * {variable_name_2}')
+        for variable_name in variable_names:
+            outer_names.append(f'sin({variable_name})')
+        for variable_name in variable_names:
+            outer_names.append(f'cos({variable_name})')
+        return outer_names
+
+    @staticmethod
+    def __translate_one_selection_head(outer_names, scaling):
+        sum = ''
+        for i in range(scaling.shape[0]):
+            if torch.abs(scaling[i]) > 0.01:
+                if sum != '':
+                    sum += ' + '
+                sum += f'{scaling[i]} * {outer_names[i]}'
+        if sum == '':
+            sum = '0'
+        return sum
+
+    def get_formula(self):
+        formula = ''
+        n_selector_heads = self.model.n_selectors
+        variables = self.input_names + ['0'] * n_selector_heads
+        for scaling in self.model.scalings:
+            outer_names = Syrenets.__get_outer_names(variables)
+            variables = copy.copy(self.input_names)
+            for i in range(n_selector_heads):
+                variables.append(Syrenets.__translate_one_selection_head(outer_names, scaling[:, i]))
+        for i in range(n_selector_heads):
+            if formula != '':
+                formula += ' + '
+            formula += variables[self.n_inp + i]
+        return variables

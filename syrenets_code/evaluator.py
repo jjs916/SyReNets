@@ -116,9 +116,9 @@ class Evaluator():
 
     def test(self):
         x_test, y_test = self.data.get_test_batch()
-        x_test_leaf = [x_test_i.requires_grad_(True) for x_test_i in x_test]  # Why requires_grad_(True)?
-        raw_prediction = self.best_model.predict(x_test_leaf)
-        prediction = self.data.transform_output(raw_prediction, x_test_leaf)
+        # x_test_leaf = [x_test_i.requires_grad_(True) for x_test_i in x_test]  # Why requires_grad_(True)?
+        raw_prediction = self.best_model.predict(x_test)
+        prediction = self.data.transform_output(raw_prediction, x_test)
         se = (y_test - prediction).pow(2).mean(1, keepdim=True)
         mse = se.mean()
         return mse
