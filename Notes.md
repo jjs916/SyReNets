@@ -6,12 +6,15 @@ Math1: $x\in\mathbb{R}^2$, $y=x_1^2+x_2$
 Works well ( $\lambda_2=0.001,0.01,0.1,1$ )
 
 
-Math2: $x\in\mathbb{R}^2$, $y=2.3x_1^2+2x_1x_2-0.5x_2$
+Math2: $x\in\mathbb{R}^2$, $y=2.3x_1^2+x_1x_2-0.5x_2$
+
+Works fine, higher lambda gets shorter formulas, lower lambdas better predicition. It does not matter so much 
 
 Math3: $x\in\mathbb{R}^2$, $y=x_1^2+x_1x_2-2x_2^3$
 
-Works well with {"depth": 4, "n_selection_heads": 2, "samples": 32000, "n_iteration": 20000}. For all $\lambda_2=0.001,0.01,0.1,1$ it identifies the formula, however, cannot eliminate all the unneccessary terms, meaning there are many coefficients between 0.1 and 0.01 which disturb the prediction. $\lambda_2=0.1$ works the best.
+Works well with {"depth": 4, "n_selection_heads": 2, "samples": 32000, "n_iteration": 20000}. For all $\lambda_2=0.001,0.01,0.1,1$ it identifies the formula, however, cannot eliminate all the unneccessary terms, meaning there are many coefficients between 0.1 and 0.01 which disturb the prediction. $\lambda_2=0.1$ works the best. Same for n_iteration=50000.
 
+With depth=2, the correct formula can logically not be found anymore, however, for $\lambda_2=0.1$ the prediction is as good as for depth=4.
 
 Math4: $x\in\mathbb{R}^3$, $y=x_1^2+x_1x_2^2-x_2^3$
 
