@@ -58,3 +58,4 @@ iteration: 18000, loss: -13.339097, current train MSE: 0.33540488141944536, lowe
 reduced lr to 0.0001
 ##########
 
+slurmstepd-cc-gpu-n01: error: *** JOB 14408 ON cc-gpu-n01 CANCELLED AT 2023-02-01T15:15:33 ***
