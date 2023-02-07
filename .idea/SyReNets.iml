@@ -4,9 +4,9 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="jdk" jdkName="neurips2021_syrenets" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="ForNet" />
   </component>
   <component name="PyDocumentationSettings">
-    <option name="format" value="GOOGLE" />
     <option name="myDocStringFormat" value="Google" />
   </component>
 </module>
