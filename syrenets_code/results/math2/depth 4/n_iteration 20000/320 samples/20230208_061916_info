@@ -1,0 +1,1 @@
+{"experiment": "math2", "lambda_entropy": 0.1, "n_inp": 2, "depth": 4, "n_selection_heads": 2, "samples": 320, "n_iteration": 20000, "rmse": 0.008276795854791432, "formula": ["x_1", "x_2", "-0.4908512225039304 * x_2 + 0.9997765264504558 * x_1 * x_2", "2.300044606354864 * x_1^2"]}

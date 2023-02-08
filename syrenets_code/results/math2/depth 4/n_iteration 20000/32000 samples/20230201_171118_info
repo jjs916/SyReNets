@@ -1,0 +1,4 @@
+{"experiment": "math2", "lambda_entropy": 0.01, "n_inp": 2, "depth": 4, "n_selection_heads": 2, "samples": 32000, "n_iteration": 20000, "rmse": 0.013675029837698503, "formula": ["x_1", "x_2", "-0.012182564746471801 * x_2 + -0.4635258750533976 * (x_2 + -1.0740728640255148 * x_1 * x_2) + -0.01406250458573377 * (x_2 + -0.3357889468845642 * x_1^2) + -0.012941427912406572 * -1.0740728640255148 * x_1 * x_2 + -0.4339144776900983 * (-1.0740728640255148 * x_1 * x_2 + -0.3357889468845642 * x_1^2) + -0.03274966678917543 * -0.3357889468845642 * x_1^2", "2.129309266254911 * x_1^2"]}
+
+Finds the most important parts of the formula (4.6 lines in libre office)
+However, it is better than with lambda_2=0.001 w.t.t. the formula and the RMSE
