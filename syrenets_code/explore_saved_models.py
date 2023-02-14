@@ -20,4 +20,4 @@ model.predict(x)
 
 input_names = ['x_1', 'x_2']
 
-model.get_formula()
+model.get_formula_str()

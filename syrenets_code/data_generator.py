@@ -55,13 +55,8 @@ def calculate_torque(lagrangian, q, qdot, qdotdot, create_graph=True):
 
 
 def func(q, qdot, qdotdot, is_compute_torque=True):
-    T = 0.5 * (M1 / 3 + M2) * L1 ** 2 * qdot[:, 0] ** 2 + 0.5 * (M2 / 3) * L2 ** 2 * qdot[:,
-                                                                                     1] ** 2 + 0.5 * M2 * L1 * L2 * qdot[
-                                                                                                                    :,
-                                                                                                                    0] * qdot[
-                                                                                                                         :,
-                                                                                                                         1] * torch.cos(
-        q[:, 0] - q[:, 1])
+    T = 0.5 * (M1 / 3 + M2) * L1 ** 2 * qdot[:, 0] ** 2 + 0.5 * (M2 / 3) * L2 ** 2 * qdot[:, 1] ** 2 + \
+        0.5 * M2 * L1 * L2 * qdot[:, 0] * qdot[:, 1] * torch.cos(q[:, 0] - q[:, 1])
     V = -(M1 / 2 + M2) * 9.81 * L1 * torch.cos(q[:, 0]) - (M2 / 2) * 9.81 * L2 * torch.cos(q[:, 1])
     eq = T - V
     if is_compute_torque:
@@ -118,7 +113,7 @@ class MathematicalFormula(IDataGenerator):
         elif self.experiment_name == '7':
             self.n_inp = 2
             x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10
-            y = x[:, 0, :] ** 2 + torch.sin(x[:, 1, :]) - 2.3 * torch.cos(0.1 * x[:, 1, :])
+            y = x[:, 0, :] ** 2 + torch.sin(x[:, 1, :]) - 2.3 * torch.cos(5 * x[:, 1, :])
         elif self.experiment_name == '8':
             self.n_inp = 2
             x = 20 * torch.rand(n_samples, self.n_inp, n_mini_batch, device=device) - 10

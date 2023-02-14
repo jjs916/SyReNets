@@ -7,17 +7,18 @@ import data_generator as dtgen
 import visualizer_w_seed as vis_w_seed
 from custom_memory import PickleMemory
 import matplotlib.pyplot as plt
-
+import os
 
 class Evaluator():
-    def __init__(self, model: ml.IModelLearner, data: dtgen.IDataGenerator, visualizer=vis_w_seed.IVisualizer):
+    def __init__(self, path, model: ml.IModelLearner, data: dtgen.IDataGenerator, visualizer=vis_w_seed.IVisualizer):
         self.model = model
         self.optimizer = torch.optim.Adam(self.model.model.parameters(), lr=1E-3)
         self.best_model = pickle.loads(pickle.dumps(self.model, -1))
         self.data = data
-        self.memory = PickleMemory()
+        self.memory = PickleMemory(path)
         visualizer.memory = self.memory
         self.visualizer = visualizer
+        self.path = path
 
     def _check_grad_error(self):
         for param in self.model.model.parameters():
@@ -102,17 +103,22 @@ class Evaluator():
                         print(
                             'iteration: {}, loss: {:5f}, current train MSE: {}, lowers train MSE: {}, training time: {:0.4f}s'.format(
                                 i, loss.item(), mse, best_mse, toc - tic))
-        plt.close()
-        plt.plot(
+                    plt.close()
+        fig, axs = plt.subplots(2, 2)
+        axs[0, 0].plot(
             torch.tensor([loss - min(torch.tensor(loss_list)) + 0.001 for loss in loss_list]).cpu().detach().numpy())
-        plt.title(f'Loss + {- min(torch.tensor(loss_list).cpu().detach().numpy()) + 0.001}')
-        plt.yscale('log')
-        plt.savefig(self.memory.datetime + 'loss.png')
+        axs[0, 0].set_yscale('log')
+        axs[0, 0].set_title(f'Loss + {- min(torch.tensor(loss_list).cpu().detach().numpy()) + 0.001}')
+
+        axs[0, 1].plot(torch.tensor(mse_list).cpu().detach().numpy())
+        axs[0, 1].set_yscale('log')
+        axs[0, 1].set_title(f'MSE')
+
+        plt.tight_layout()
+
+        plt.savefig(os.path.join(self.path, self.memory.datetime + 'statistics.png'))
         plt.close()
-        plt.plot(torch.tensor(mse_list).cpu().detach().numpy())
-        plt.yscale('log')
-        plt.savefig(self.memory.datetime + 'mse.png')
-        plt.close()
+
 
     def test(self):
         x_test, y_test = self.data.get_test_batch()

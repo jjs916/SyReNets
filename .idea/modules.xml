@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../ForNet/.idea/ForNet.iml" filepath="$PROJECT_DIR$/../ForNet/.idea/ForNet.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/SyReNets.iml" filepath="$PROJECT_DIR$/.idea/SyReNets.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../friction/.idea/friction.iml" filepath="$PROJECT_DIR$/../friction/.idea/friction.iml" />
     </modules>
   </component>
 </project>

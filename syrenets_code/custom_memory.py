@@ -4,15 +4,16 @@ import pickle
 import torch
 import json
 
+
 class PickleMemory():
-    def __init__(self):
+    def __init__(self, path):
         self.datetime = datetime.datetime.now().strftime('%Y%m%d_%H%M%S_')
-        self.path = os.getcwd()+''
+        self.path = path
         if not os.path.exists(self.path):
             os.mkdir(self.path)
 
     def make_name(self, name):
-        return self.path+'/'+self.datetime+name
+        return self.path + '/' + self.datetime + name
 
     def save(self, data, name):
         with open(self.make_name(name), 'wb') as f:
@@ -24,10 +25,11 @@ class PickleMemory():
     def json_save(self, data, name):
         with open(self.make_name(name), "w", encoding="utf8") as f:
             json.dump(data, f)
+
     def load(self, name):
-        with open(self.path+'/'+name, 'rb') as f:
+        with open(self.path + '/' + name, 'rb') as f:
             pick = pickle.load(f)
         return pick
 
     def torch_load(self, name):
-        return torch.load(self.path+'/'+name)
+        return torch.load(self.path + '/' + name)

@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../ForNet" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../friction" vcs="Git" />
   </component>
 </project>

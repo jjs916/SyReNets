@@ -60,9 +60,9 @@ class IVisualizer():
         raise NotImplementedError
 
 class LearnerVisualizer(IVisualizer):
-    def __init__(self, depth=0, is_save=True):
+    def __init__(self, path, depth=0, is_save=True):
         self.is_save = is_save
-        self.memory = PickleMemory()
+        self.memory = PickleMemory(path)
         self.error_stats = ErrorStatistics()
         plt.ion()
         plt.show()

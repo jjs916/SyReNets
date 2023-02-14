@@ -6,6 +6,11 @@ import visualizer_w_seed as vis_w_seed
 from custom_memory import PickleMemory
 from evaluator import Evaluator
 import syrenets_learner_20210511 as syrenets_learner
+import sympy
+from itertools import product
+import pandas as pd
+import os
+import datetime
 
 devices = []
 if torch.cuda.is_available():
@@ -18,7 +23,7 @@ else:
 
 
 def run(seed, experiment, is_train=True, file_str='', n_inp=6, depth=3, n_sel=12, n_samples=32, n_mini_batch=1000,
-        n_iterations=100, lambda_entropy=0.01):
+        n_iterations=100, lambda_entropy=0.01, results_path=''):
     if experiment == 'direct':
         data = dtgen.Lagrangian(n_inp, n_samples, n_mini_batch, device=devices[0])
     elif experiment == 'indirect':
@@ -31,20 +36,23 @@ def run(seed, experiment, is_train=True, file_str='', n_inp=6, depth=3, n_sel=12
     else:
         print('Experiment incorrectly specified')
         raise NotImplementedError
-    visualizer_seed = vis_w_seed.LearnerVisualizer(depth, is_save=True)
+    visualizer_seed = vis_w_seed.LearnerVisualizer(results_path, depth, is_save=True)
     visualizer_seed._reg_seed(seed)
     if is_train:
         syrenets_model = syrenets_learner.Syrenets(n_inp, depth, n_sel, use_autoencoder=True, input_names=input_names,
                                                    lambda_entropy=lambda_entropy, device=devices[0])
-        evaluator = Evaluator(syrenets_model, data, visualizer_seed)
+        evaluator = Evaluator(results_path, syrenets_model, data, visualizer_seed)
         evaluator.train(n_iterations=n_iterations)
 
         mse = evaluator.test()
         formula = syrenets_model.get_formula()
+        formula = round_expr(formula, num_digits=3)
         info = {'experiment': experiment, 'lambda_entropy': lambda_entropy, 'n_inp': n_inp, 'depth': depth,
                 'n_selection_heads': n_sel, 'samples': n_samples * n_mini_batch, 'n_iteration': n_iterations,
-                'rmse': torch.sqrt(mse).item(), 'formula': formula}
+                'rmse': torch.sqrt(mse).item(), 'formula': str(formula)}
+        print(f'Formula: {formula}')
         evaluator.memory.json_save(info, 'info')
+        return info
     else:
         syrenets_model = visualizer_seed.load_save(file_str, '', time=100)
         # do something with the model
@@ -56,11 +64,17 @@ def run(seed, experiment, is_train=True, file_str='', n_inp=6, depth=3, n_sel=12
         pause(100)
 
 
-def train(experiment: str, n_inp=6, depth=3, n_sel=12, n_samples=32, n_mini_batch=1000, n_iterations=1000,
-          lambda_entropy=0.001):
+def round_expr(expr, num_digits):
+    return expr.xreplace({n: round(n, num_digits) for n in expr.atoms(sympy.Number)})
+
+
+def train(experiment: str, results_path, n_inp=6, depth_list=[3], n_sel_list=[12], n_samples=32,
+          n_mini_batch_list=[1000],
+          n_iterations_list=[1000], lambda_entropy_list=[0.001]):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
     torch.set_default_dtype(torch.float64)
+    start_time = datetime.datetime.now().strftime('%Y%m%d_%H%M%S_')
     if experiment == 'direct':
         # 10 random seeds used for training
         seeds = [14580102103227399718, 17441082891176872975, 2843389671395920724, 3883733847499856553,
@@ -83,8 +97,16 @@ def train(experiment: str, n_inp=6, depth=3, n_sel=12, n_samples=32, n_mini_batc
         print('\n#### starting new seed ####\n')
         torch.manual_seed(rd)
         print('random seed is: {}'.format(rd))
-        run(rd, experiment, is_train=True, n_inp=n_inp, depth=depth, n_sel=n_sel, n_samples=n_samples,
-            n_mini_batch=n_mini_batch, n_iterations=n_iterations, lambda_entropy=lambda_entropy)
+        info_list = []
+        for (depth, n_sel, n_mini_batch, n_iterations, lambda_entropy) in product(depth_list, n_sel_list,
+                                                                                  n_mini_batch_list, n_iterations_list,
+                                                                                  lambda_entropy_list):
+            info_list.append(
+                run(rd, experiment, is_train=True, n_inp=n_inp, depth=depth, n_sel=n_sel, n_samples=n_samples,
+                    n_mini_batch=n_mini_batch, n_iterations=n_iterations, lambda_entropy=lambda_entropy,
+                    results_path=results_path))
+            info_df = pd.DataFrame(info_list)
+            info_df.to_csv(os.path.join(results_path, experiment + '_' + start_time + '.csv'))
 
 
 def eval(experiment: str, model_name: str):
