@@ -1,0 +1,4 @@
+{"experiment": "math2", "lambda_entropy": 0.001, "n_inp": 2, "depth": 4, "n_selection_heads": 2, "samples": 3200, "n_iteration": 20000, "rmse": 0.0047385048268974205, "formula": ["x_1", "x_2", "0.012560980358937998 * x_1 + -0.011432546368655311 * x_2 + -0.017398636319761174 * (x_2 + 7.358436120730204 * x_2) + -0.015662177257030573 * 7.358436120730204 * x_2 + 0.41193915822520294 * x_1 * 2.3220941555144736 * (x_1 + x_2)", "1.3501811739428002 * x_1^2"]}
+
+Finds the most important parts of the formula (3.1
+ lines in libre office)
