@@ -1,0 +1,1 @@
+{"experiment": "math6", "lambda_entropy": 0.001, "n_inp": 2, "depth": 2, "n_selection_heads": 2, "samples": 3200, "n_iteration": 10000, "rmse": 0.39191332562716025, "formula": "-0.004*x_1 + 0.999*x_2 + 0.502"}

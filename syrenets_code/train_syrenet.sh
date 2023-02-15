@@ -1,3 +1,3 @@
 #!/bin/sh
-python train.py -c math3.ini
+python train.py -c math7.ini
 

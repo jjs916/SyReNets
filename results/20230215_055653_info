@@ -1,0 +1,1 @@
+{"experiment": "math6", "lambda_entropy": 1, "n_inp": 2, "depth": 2, "n_selection_heads": 2, "samples": 320, "n_iteration": 50000, "rmse": 0.37829598641571843, "formula": "0.997*x_2 + 0.497*cos(0.059*x_2)"}

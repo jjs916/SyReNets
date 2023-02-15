@@ -1,0 +1,1 @@
+{"experiment": "math7", "lambda_entropy": 1, "n_inp": 2, "depth": 2, "n_selection_heads": 2, "samples": 320, "n_iteration": 5000, "rmse": 1.7970776414938725, "formula": "0.992*x_1**2 - 0.222*x_1 - 0.085*x_2 + 0.734*sin(x_2) - 0.017*sin(0.653*x_1**2 + 0.019*x_1 + 0.083*x_2 + 0.09*sin(x_2) + 0.015*cos(x_2)) + 0.021*cos(x_2)"}
