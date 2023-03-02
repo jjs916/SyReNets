@@ -44,7 +44,8 @@ class Evaluator():
             with torch.no_grad():
                 new_x, new_y = self.data.get_train_mini_batch(i)  # Get in every iteration a new minibatch
                 # The training examples from the last batch which were the worst fit
-                worst_fit = se.argsort(0)[-round(new_x.shape[0] / 2):]
+                # worst_fit = se.argsort(0)[-round(new_x.shape[0] / 2):]
+                worst_fit = se.argsort(0)[-round(new_x.shape[0]):]
                 model_input = torch.cat([new_x, model_input[worst_fit, :]],
                                         dim=0).detach()  # Concatenate the new minibatch with parts (in a different order) of the one above; why?
                 real_out = torch.cat([new_y, real_out[worst_fit, :]], dim=0).detach()  # Does the same now to y
