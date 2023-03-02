@@ -1,0 +1,89 @@
+2023-02-24 16:32:03,278 INFO    StreamThr :9040 [internal.py:wandb_internal():87] W&B internal server running at pid: 9040, started at: 2023-02-24 16:32:03.278295
+2023-02-24 16:32:03,278 DEBUG   HandlerThread:9040 [handler.py:handle_request():144] handle_request: status
+2023-02-24 16:32:03,309 INFO    WriterThread:9040 [datastore.py:open_for_write():85] open: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\run-y2ioxp8m.wandb
+2023-02-24 16:32:03,309 DEBUG   SenderThread:9040 [sender.py:send():336] send: header
+2023-02-24 16:32:03,362 DEBUG   SenderThread:9040 [sender.py:send():336] send: run
+2023-02-24 16:32:03,863 INFO    SenderThread:9040 [dir_watcher.py:__init__():216] watching files in: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files
+2023-02-24 16:32:03,863 INFO    SenderThread:9040 [sender.py:_start_run_threads():1067] run started: y2ioxp8m with start time 1677252723.278295
+2023-02-24 16:32:03,863 DEBUG   SenderThread:9040 [sender.py:send_request():363] send_request: summary_record
+2023-02-24 16:32:03,863 INFO    SenderThread:9040 [sender.py:_save_file():1321] saving file wandb-summary.json with policy end
+2023-02-24 16:32:03,863 DEBUG   HandlerThread:9040 [handler.py:handle_request():144] handle_request: check_version
+2023-02-24 16:32:03,863 DEBUG   SenderThread:9040 [sender.py:send_request():363] send_request: check_version
+2023-02-24 16:32:03,948 DEBUG   HandlerThread:9040 [handler.py:handle_request():144] handle_request: run_start
+2023-02-24 16:32:03,979 DEBUG   HandlerThread:9040 [system_info.py:__init__():31] System info init
+2023-02-24 16:32:03,979 DEBUG   HandlerThread:9040 [system_info.py:__init__():46] System info init done
+2023-02-24 16:32:03,979 INFO    HandlerThread:9040 [system_monitor.py:start():151] Starting system monitor
+2023-02-24 16:32:03,979 INFO    SystemMonitor:9040 [system_monitor.py:_start():116] Starting system asset monitoring threads
+2023-02-24 16:32:03,979 INFO    HandlerThread:9040 [system_monitor.py:probe():172] Collecting system info
+2023-02-24 16:32:03,979 INFO    SystemMonitor:9040 [interfaces.py:start():168] Started cpu
+2023-02-24 16:32:03,979 INFO    SystemMonitor:9040 [interfaces.py:start():168] Started disk
+2023-02-24 16:32:03,979 INFO    SystemMonitor:9040 [interfaces.py:start():168] Started gpu
+2023-02-24 16:32:03,995 INFO    SystemMonitor:9040 [interfaces.py:start():168] Started memory
+2023-02-24 16:32:04,010 INFO    SystemMonitor:9040 [interfaces.py:start():168] Started network
+2023-02-24 16:32:04,010 DEBUG   HandlerThread:9040 [system_info.py:probe():195] Probing system
+2023-02-24 16:32:04,010 DEBUG   HandlerThread:9040 [system_info.py:_probe_git():180] Probing git
+2023-02-24 16:32:04,010 ERROR   gpu       :9040 [interfaces.py:monitor():129] Failed to sample metric: Not Supported
+2023-02-24 16:32:04,010 ERROR   gpu       :9040 [interfaces.py:monitor():129] Failed to sample metric: Not Supported
+2023-02-24 16:32:04,111 DEBUG   HandlerThread:9040 [system_info.py:_probe_git():188] Probing git done
+2023-02-24 16:32:04,111 DEBUG   HandlerThread:9040 [system_info.py:probe():241] Probing system done
+2023-02-24 16:32:04,111 DEBUG   HandlerThread:9040 [system_monitor.py:probe():181] {'os': 'Windows-10-10.0.19044-SP0', 'python': '3.9.7', 'heartbeatAt': '2023-02-24T15:32:04.010860', 'startedAt': '2023-02-24T15:32:03.262656', 'docker': None, 'cuda': None, 'args': None, 'state': 'running', 'program': '<python with no main file>', 'git': {'remote': 'git@github.com:jjs916/SyReNets.git', 'commit': 'ecca9b5ff8beabe86db90fb17c4bea9b7fb56622'}, 'email': 'philipp.scholl@tum.de', 'root': 'C:/Users/phili/PycharmProjects/physicalLawLearning/SyReNets', 'host': 'LAPTOP-JR8E3NO9', 'username': 'phili', 'executable': 'D:\\programs\\miniconda3\\envs\\cartoon-rde\\python.exe', 'cpu_count': 4, 'cpu_count_logical': 8, 'cpu_freq': {'current': 1600.0, 'min': 0.0, 'max': 1800.0}, 'cpu_freq_per_core': [{'current': 1600.0, 'min': 0.0, 'max': 1800.0}], 'disk': {'total': 118.00878524780273, 'used': 115.2818603515625}, 'gpu': 'NVIDIA GeForce MX130', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce MX130', 'memory_total': 2147483648}], 'memory': {'total': 7.889942169189453}}
+2023-02-24 16:32:04,111 INFO    HandlerThread:9040 [system_monitor.py:probe():182] Finished collecting system info
+2023-02-24 16:32:04,111 INFO    HandlerThread:9040 [system_monitor.py:probe():185] Publishing system info
+2023-02-24 16:32:04,111 DEBUG   HandlerThread:9040 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2023-02-24 16:32:04,111 DEBUG   HandlerThread:9040 [system_info.py:_save_pip():67] Saving pip packages done
+2023-02-24 16:32:04,111 DEBUG   HandlerThread:9040 [system_info.py:_save_conda():74] Saving list of conda packages installed into the current environment
+2023-02-24 16:32:04,111 ERROR   HandlerThread:9040 [system_info.py:_save_conda():85] Error saving conda packages: [WinError 2] Das System kann die angegebene Datei nicht finden
+Traceback (most recent call last):
+  File "D:\programs\miniconda3\envs\cartoon-rde\lib\site-packages\wandb\sdk\internal\system\system_info.py", line 81, in _save_conda
+    subprocess.call(
+  File "D:\programs\miniconda3\envs\cartoon-rde\lib\subprocess.py", line 349, in call
+    with Popen(*popenargs, **kwargs) as p:
+  File "D:\programs\miniconda3\envs\cartoon-rde\lib\subprocess.py", line 951, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "D:\programs\miniconda3\envs\cartoon-rde\lib\subprocess.py", line 1420, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+FileNotFoundError: [WinError 2] Das System kann die angegebene Datei nicht finden
+2023-02-24 16:32:04,111 DEBUG   HandlerThread:9040 [system_info.py:_save_conda():86] Saving conda packages done
+2023-02-24 16:32:04,126 INFO    HandlerThread:9040 [system_monitor.py:probe():187] Finished publishing system info
+2023-02-24 16:32:04,126 DEBUG   SenderThread:9040 [sender.py:send():336] send: files
+2023-02-24 16:32:04,126 INFO    SenderThread:9040 [sender.py:_save_file():1321] saving file wandb-metadata.json with policy now
+2023-02-24 16:32:04,148 DEBUG   HandlerThread:9040 [handler.py:handle_request():144] handle_request: stop_status
+2023-02-24 16:32:04,148 DEBUG   HandlerThread:9040 [handler.py:handle_request():144] handle_request: pause
+2023-02-24 16:32:04,148 INFO    HandlerThread:9040 [handler.py:handle_request_pause():717] stopping system metrics thread or process
+2023-02-24 16:32:04,148 INFO    HandlerThread:9040 [system_monitor.py:finish():161] Stopping system monitor
+2023-02-24 16:32:04,148 DEBUG   SenderThread:9040 [sender.py:send_request():363] send_request: stop_status
+2023-02-24 16:32:04,148 DEBUG   SystemMonitor:9040 [system_monitor.py:_start():130] Starting system metrics aggregation loop
+2023-02-24 16:32:04,148 DEBUG   SystemMonitor:9040 [system_monitor.py:_start():137] Finished system metrics aggregation loop
+2023-02-24 16:32:04,148 DEBUG   SystemMonitor:9040 [system_monitor.py:_start():141] Publishing last batch of metrics
+2023-02-24 16:32:04,164 INFO    HandlerThread:9040 [interfaces.py:finish():175] Joined cpu
+2023-02-24 16:32:04,164 INFO    HandlerThread:9040 [interfaces.py:finish():175] Joined disk
+2023-02-24 16:32:04,195 ERROR   gpu       :9040 [interfaces.py:aggregate():146] Failed to serialize metric: division by zero
+2023-02-24 16:32:04,195 INFO    HandlerThread:9040 [interfaces.py:finish():175] Joined gpu
+2023-02-24 16:32:04,195 INFO    HandlerThread:9040 [interfaces.py:finish():175] Joined memory
+2023-02-24 16:32:04,195 INFO    HandlerThread:9040 [interfaces.py:finish():175] Joined network
+2023-02-24 16:32:04,343 DEBUG   SenderThread:9040 [sender.py:send():336] send: telemetry
+2023-02-24 16:32:04,343 DEBUG   SenderThread:9040 [sender.py:send():336] send: stats
+2023-02-24 16:32:04,766 INFO    wandb-upload_0:9040 [upload_job.py:push():138] Uploaded file C:\Users\phili\AppData\Local\Temp\tmpv4zgajwwwandb\e45ooa71-wandb-metadata.json
+2023-02-24 16:32:04,881 INFO    Thread-17 :9040 [dir_watcher.py:_on_file_created():275] file/dir created: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files\conda-environment.yaml
+2023-02-24 16:32:04,881 INFO    Thread-17 :9040 [dir_watcher.py:_on_file_created():275] file/dir created: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files\wandb-metadata.json
+2023-02-24 16:32:04,881 INFO    Thread-17 :9040 [dir_watcher.py:_on_file_created():275] file/dir created: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files\requirements.txt
+2023-02-24 16:32:04,881 INFO    Thread-17 :9040 [dir_watcher.py:_on_file_created():275] file/dir created: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files\wandb-summary.json
+2023-02-24 16:32:08,371 DEBUG   HandlerThread:9040 [handler.py:handle_request():144] handle_request: status_report
+2023-02-24 16:32:12,309 WARNING StreamThr :9040 [internal.py:is_dead():415] Internal process exiting, parent pid 20948 disappeared
+2023-02-24 16:32:12,309 ERROR   StreamThr :9040 [internal.py:wandb_internal():153] Internal process shutdown.
+2023-02-24 16:32:12,378 INFO    SenderThread:9040 [sender.py:finish():1493] shutting down sender
+2023-02-24 16:32:12,378 INFO    WriterThread:9040 [datastore.py:close():299] close: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\run-y2ioxp8m.wandb
+2023-02-24 16:32:12,378 INFO    HandlerThread:9040 [handler.py:finish():841] shutting down handler
+2023-02-24 16:32:12,378 INFO    SenderThread:9040 [dir_watcher.py:finish():362] shutting down directory watcher
+2023-02-24 16:32:12,911 INFO    SenderThread:9040 [dir_watcher.py:finish():392] scan: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files
+2023-02-24 16:32:12,911 INFO    SenderThread:9040 [dir_watcher.py:finish():406] scan save: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files\conda-environment.yaml conda-environment.yaml
+2023-02-24 16:32:12,911 INFO    SenderThread:9040 [dir_watcher.py:finish():406] scan save: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files\config.yaml config.yaml
+2023-02-24 16:32:12,911 INFO    SenderThread:9040 [dir_watcher.py:finish():406] scan save: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files\requirements.txt requirements.txt
+2023-02-24 16:32:12,911 INFO    SenderThread:9040 [dir_watcher.py:finish():406] scan save: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files\wandb-metadata.json wandb-metadata.json
+2023-02-24 16:32:12,911 INFO    SenderThread:9040 [dir_watcher.py:finish():406] scan save: C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files\wandb-summary.json wandb-summary.json
+2023-02-24 16:32:12,926 INFO    SenderThread:9040 [file_pusher.py:finish():162] shutting down file pusher
+2023-02-24 16:32:12,926 INFO    SenderThread:9040 [file_pusher.py:join():167] waiting for file pusher
+2023-02-24 16:32:13,865 INFO    wandb-upload_0:9040 [upload_job.py:push():138] Uploaded file C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files\config.yaml
+2023-02-24 16:32:13,865 INFO    wandb-upload_2:9040 [upload_job.py:push():138] Uploaded file C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files\wandb-summary.json
+2023-02-24 16:32:13,865 INFO    wandb-upload_1:9040 [upload_job.py:push():138] Uploaded file C:\Users\phili\PycharmProjects\physicalLawLearning\SyReNets\wandb\run-20230224_163203-y2ioxp8m\files\requirements.txt
+2023-02-24 16:32:14,013 INFO    MainThread:9040 [internal.py:handle_exit():77] Internal process exited

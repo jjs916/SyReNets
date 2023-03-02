@@ -1,0 +1,49 @@
+{
+    "os": "Windows-10-10.0.19044-SP0",
+    "python": "3.9.7",
+    "heartbeatAt": "2023-02-24T15:32:04.010860",
+    "startedAt": "2023-02-24T15:32:03.262656",
+    "docker": null,
+    "cuda": null,
+    "args": null,
+    "state": "running",
+    "program": "<python with no main file>",
+    "git": {
+        "remote": "git@github.com:jjs916/SyReNets.git",
+        "commit": "ecca9b5ff8beabe86db90fb17c4bea9b7fb56622"
+    },
+    "email": "philipp.scholl@tum.de",
+    "root": "C:/Users/phili/PycharmProjects/physicalLawLearning/SyReNets",
+    "host": "LAPTOP-JR8E3NO9",
+    "username": "phili",
+    "executable": "D:\\programs\\miniconda3\\envs\\cartoon-rde\\python.exe",
+    "cpu_count": 4,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 1600.0,
+        "min": 0.0,
+        "max": 1800.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1600.0,
+            "min": 0.0,
+            "max": 1800.0
+        }
+    ],
+    "disk": {
+        "total": 118.00878524780273,
+        "used": 115.2818603515625
+    },
+    "gpu": "NVIDIA GeForce MX130",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce MX130",
+            "memory_total": 2147483648
+        }
+    ],
+    "memory": {
+        "total": 7.889942169189453
+    }
+}
