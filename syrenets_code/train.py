@@ -33,7 +33,8 @@ depth_list = ast.literal_eval(config['PARAMETERS']['depth'])
 n_iterations_list = ast.literal_eval(config['PARAMETERS']['n_iterations'])
 mini_batches_list = ast.literal_eval(config['PARAMETERS']['mini_batches'])
 lambda_2_list = ast.literal_eval(config['PARAMETERS']['lambda_2'])
+optimizers_list = ast.literal_eval(config['PARAMETERS']['optimizer'])
 
 train(experiment_name, results_path=results_path, n_inp=int(args.number_inputs), depth_list=depth_list,
       n_sel_list=number_selection_heads_list, n_samples=int(args.number_samples), n_mini_batch_list=mini_batches_list,
-      n_iterations_list=n_iterations_list, lambda_entropy_list=lambda_2_list)
+      n_iterations_list=n_iterations_list, lambda_entropy_list=lambda_2_list, optimizers_list=optimizers_list)

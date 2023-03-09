@@ -9,10 +9,21 @@ from custom_memory import PickleMemory
 import matplotlib.pyplot as plt
 import os
 
+
 class Evaluator():
-    def __init__(self, path, model: ml.IModelLearner, data: dtgen.IDataGenerator, visualizer=vis_w_seed.IVisualizer):
+    def __init__(self, path, model: ml.IModelLearner, data: dtgen.IDataGenerator, visualizer=vis_w_seed.IVisualizer,
+                 optimizer='adam'):
         self.model = model
-        self.optimizer = torch.optim.Adam(self.model.model.parameters(), lr=1E-3)
+        if optimizer == 'adam':
+            self.optimizer = torch.optim.Adam(self.model.model.parameters(), lr=1E-3)
+        elif optimizer == 'rmsprop':
+            self.optimizer = torch.optim.RMSprop(self.model.model.parameters(), lr=1E-3)
+        elif optimizer == 'sgd':
+            self.optimizer = torch.optim.SGD(self.model.model.parameters(), lr=1E-3)
+        elif optimizer == 'rprop':
+            self.optimizer = torch.optim.Rprop(self.model.model.parameters(), lr=1E-3)
+        else:
+            raise NotImplementedError(f'Optimizer {optimizer} is not implemented yet.')
         self.best_model = pickle.loads(pickle.dumps(self.model, -1))
         self.data = data
         self.memory = PickleMemory(path)
@@ -119,7 +130,6 @@ class Evaluator():
 
         plt.savefig(os.path.join(self.path, self.memory.datetime + 'statistics.png'))
         plt.close()
-
 
     def test(self):
         x_test, y_test = self.data.get_test_batch()

@@ -23,7 +23,7 @@ else:
 
 
 def run(seed, experiment, is_train=True, file_str='', n_inp=6, depth=3, n_sel=12, n_samples=32, n_mini_batch=1000,
-        n_iterations=100, lambda_entropy=0.01, results_path=''):
+        n_iterations=100, lambda_entropy=0.01, results_path='', optimizer='adam'):
     if experiment == 'direct':
         data = dtgen.Lagrangian(n_inp, n_samples, n_mini_batch, device=devices[0])
     elif experiment == 'indirect':
@@ -41,7 +41,7 @@ def run(seed, experiment, is_train=True, file_str='', n_inp=6, depth=3, n_sel=12
     if is_train:
         syrenets_model = syrenets_learner.Syrenets(n_inp, depth, n_sel, use_autoencoder=True, input_names=input_names,
                                                    lambda_entropy=lambda_entropy, device=devices[0])
-        evaluator = Evaluator(results_path, syrenets_model, data, visualizer_seed)
+        evaluator = Evaluator(results_path, syrenets_model, data, visualizer_seed, optimizer=optimizer)
         evaluator.train(n_iterations=n_iterations)
 
         mse = evaluator.test()
@@ -49,6 +49,7 @@ def run(seed, experiment, is_train=True, file_str='', n_inp=6, depth=3, n_sel=12
         formula = round_expr(formula, num_digits=3)
         info = {'experiment': experiment, 'lambda_entropy': lambda_entropy, 'n_inp': n_inp, 'depth': depth,
                 'n_selection_heads': n_sel, 'samples': n_samples * n_mini_batch, 'n_iteration': n_iterations,
+                'optimizer': optimizer,
                 'rmse': torch.sqrt(mse).item(), 'formula': str(formula)}
         print(f'Formula: {formula}')
         evaluator.memory.json_save(info, 'info')
@@ -69,7 +70,7 @@ def round_expr(expr, num_digits):
 
 
 def train(experiment: str, results_path, n_inp=6, depth_list=[3], n_sel_list=[12], n_samples=32,
-          n_mini_batch_list=[1000],
+          n_mini_batch_list=[1000], optimizers_list=['adam'],
           n_iterations_list=[1000], lambda_entropy_list=[0.001]):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
@@ -98,13 +99,15 @@ def train(experiment: str, results_path, n_inp=6, depth_list=[3], n_sel_list=[12
         torch.manual_seed(rd)
         print('random seed is: {}'.format(rd))
         info_list = []
-        for (depth, n_sel, n_mini_batch, n_iterations, lambda_entropy) in product(depth_list, n_sel_list,
-                                                                                  n_mini_batch_list, n_iterations_list,
-                                                                                  lambda_entropy_list):
+        for (depth, n_sel, n_mini_batch, n_iterations, lambda_entropy, optimizer) in product(depth_list, n_sel_list,
+                                                                                             n_mini_batch_list,
+                                                                                             n_iterations_list,
+                                                                                             lambda_entropy_list,
+                                                                                             optimizers_list):
             info_list.append(
                 run(rd, experiment, is_train=True, n_inp=n_inp, depth=depth, n_sel=n_sel, n_samples=n_samples,
                     n_mini_batch=n_mini_batch, n_iterations=n_iterations, lambda_entropy=lambda_entropy,
-                    results_path=results_path))
+                    results_path=results_path, optimizer=optimizer))
             info_df = pd.DataFrame(info_list)
             info_df.to_csv(os.path.join(results_path, experiment + '_' + start_time + '.csv'))
 
